@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-class AwsApplication {
+class MainApplication {
 
 	static void main(String[] args) {
-		SpringApplication.run AwsApplication, args
+		SpringApplication.run MainApplication, args
 	}
 }
