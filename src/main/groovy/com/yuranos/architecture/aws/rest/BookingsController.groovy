@@ -24,6 +24,7 @@ class BookingsController implements ErrorHandler {
     @GetMapping("/booking")
     String getBooking(@RequestParam(required=true) int id) {
 //        Booking(5, "Yura Nosenko", "Tenerife", new Date())
+        printf "Hello there!"
         def booking = bookingRepository.find id
         return JsonBuilder(booking).toPrettyString()
     }

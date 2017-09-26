@@ -23,37 +23,42 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'maven'
 
+//apply plugin: 'application'
+//your code
+//applicationDefaultJvmArgs = ['-Xdebug', '-Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=n']
+//mainClassName = 'com.yuranos.architecture.aws.MainApplication'
+
+//org.gradle.jvmargs = ['-Xdebug', '-Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=n']
+
 bootJar {
-	baseName = 'spring-boot-reactive-aws'
-	version = '0.0.1-SNAPSHOT'
-	launchScript {
+    baseName = 'spring-boot-reactive-aws'
+    version = '0.0.1-SNAPSHOT'
+//	applicationDefaultJvmArgs = ['-Xdebug', '-Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=n']
+//	https://github.com/spring-projects/spring-boot/issues/9632
+    launchScript {
 		included = true
 	}
 }
-
-task clientJar(type: Jar) {
-	appendix = 'client'
-	from sourceSets.main.output
-	exclude('**/*Something*')
-}
-
-//springBoot {
-//	buildInfo {
-//		properties {
-//			artifact = 'spring-boot-reactive-aws'
-//			version = '0.0.1-SNAPSHOT'
-//			name = 'Reactive Spring Boot Application for AWS'
-//		}
-//	}
-//}
-
 //DevTools
 bootJar {
 	excludeDevtools = false
 }
 bootRun {
 	sourceResources sourceSets.main
+	jvmArgs '-Xdebug', '-Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=n'
 }
+
+//Should activate actuator
+springBoot {
+    buildInfo()
+    }
+//task clientJar(type: Jar) {
+//	appendix = 'client'
+//	from sourceSets.main.output
+//	exclude('**/*Something*')
+//}
+
+
 
 uploadBootArchives {
 	repositories {
@@ -108,10 +113,18 @@ dependencies {
     compile group: 'com.h2database', name: 'h2', version: '1.3.148'
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-actuator")
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('io.projectreactor:reactor-test')
-
 	// https://mvnrepository.com/artifact/com.h2database/h2
 	testCompile group: 'com.h2database', name: 'h2', version: '1.3.148'
+
+	//Spock
+	testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
+
+	// optional dependencies for using Spock
+	testCompile "org.hamcrest:hamcrest-core:1.3" // only necessary if Hamcrest matchers are used
+	testRuntime "net.bytebuddy:byte-buddy:1.6.5"          // allows mocking of classes (in addition to interfaces)
+	testRuntime "org.objenesis:objenesis:2.5.1"    // allows mocking of classes without default constructor (together with CGLIB)
 
 }
