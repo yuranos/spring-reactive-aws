@@ -9,6 +9,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'org.springframework:springloaded:1.2.6.RELEASE'
 	}
 
 }
@@ -22,6 +23,15 @@ apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'maven'
+//https://docs.spring.io/spring-boot/docs/current/reference/html/howto-hotswapping.html#howto-reload-springloaded-gradle-and-intellij-idea
+apply plugin: 'idea'
+idea {
+	module {
+		inheritOutputDirs = false
+		outputDir = file("$buildDir/classes/main/")
+	}
+}
+
 
 //apply plugin: 'application'
 //your code
