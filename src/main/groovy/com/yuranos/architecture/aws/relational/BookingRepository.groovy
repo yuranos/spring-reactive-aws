@@ -16,6 +16,6 @@ interface BookingRepository extends CrudRepository<Booking, Long> {
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query('''update Booking b set b.passengerName = :#{#booking.passengerName}, b.destination = :#{#booking.destination},
-            b.departureDate = :#{#booking.departureDate} where b.id = :#{#booking.id}''')
-    void update(@Param("booking") Booking booking)
+            b.departureDate = :#{#booking.departureDate} where b.id = :id''')
+    int update(@Param("id") id, @Param("booking") Booking booking)
 }

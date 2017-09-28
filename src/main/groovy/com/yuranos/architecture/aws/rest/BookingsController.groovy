@@ -35,7 +35,7 @@ class BookingsController implements ErrorHandler {
 
     @PutMapping("/booking/{id}")
     ResponseEntity<String> putBooking(@PathVariable(required = true) int id, @RequestBody Booking booking) {
-        bookingRepository.update(booking)
+        int status = bookingRepository.update(id, booking)
         return ResponseEntity.ok("The booking with id $id has been updated")
     }
 
