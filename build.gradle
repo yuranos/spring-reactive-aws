@@ -113,17 +113,18 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-//            {
-//		exclude module: 'hibernate-entitymanager'
-//	}
+    //            {
+    //		exclude module: 'hibernate-entitymanager'
+    //	}
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-webflux')
 	compile('org.codehaus.groovy:groovy')
 	compile('org.codehaus.groovy:groovy-json')
-    compile group: 'com.h2database', name: 'h2', version: '1.3.148'
-    compile("org.springframework.boot:spring-boot-devtools")
+    //    compile group: 'com.h2database', name: 'h2', version: '1.3.148'
+	// Use MySQL Connector-J
+	compile 'mysql:mysql-connector-java'
+	compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-actuator")
-
     testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('io.projectreactor:reactor-test')
 	// https://mvnrepository.com/artifact/com.h2database/h2
