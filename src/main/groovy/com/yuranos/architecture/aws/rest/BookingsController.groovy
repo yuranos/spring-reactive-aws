@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @Newify([JsonBuilder, Booking])
-class BookingsController implements ErrorHandler {
+class BookingsController implements DateFormatter {
 
     @Autowired
     BookingRepository bookingRepository
@@ -18,25 +18,25 @@ class BookingsController implements ErrorHandler {
     @GetMapping("/booking/{id}")
     String getBooking(@PathVariable(required = true) int id) {
         def booking = bookingRepository.findById(id)
-        return JsonBuilder(booking.orElse(Booking())).toPrettyString()
+        JsonBuilder(booking.orElse(Booking())).toPrettyString()
     }
 
     @PostMapping("/booking")
     ResponseEntity<String> postBooking(@RequestBody Booking booking) {
         def createdBooking = bookingRepository.save(booking)
-        return ResponseEntity.ok("The booking with id $createdBooking.id has been created")
+        ResponseEntity.ok("The booking with id $createdBooking.id has been created")
     }
 
     @DeleteMapping("/booking/{id}")
     ResponseEntity<String> deleteBooking(@PathVariable(required = true) int id) {
         bookingRepository.deleteById(id)
-        return ResponseEntity.ok("The booking with id ${id} has been deleted")
+        ResponseEntity.ok("The booking with id ${id} has been deleted")
     }
 
     @PutMapping("/booking/{id}")
     ResponseEntity<String> putBooking(@PathVariable(required = true) int id, @RequestBody Booking booking) {
         int status = bookingRepository.update(id, booking)
-        return ResponseEntity.ok("The booking with id $id has been updated")
+        ResponseEntity.ok("The booking with id $id has been updated")
     }
 
 //    @RequestMapping("/")
