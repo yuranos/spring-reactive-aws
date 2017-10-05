@@ -14,6 +14,8 @@ spring:
         url: jdbc:mysql://localhost:3306/bookings
         username: root
         password: root
+#    jackson:
+#        date-format: "dd-MM-yyyy"
 server:
     port: 8080
 management:

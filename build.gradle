@@ -62,13 +62,12 @@ bootRun {
 springBoot {
     buildInfo()
     }
+
 //task clientJar(type: Jar) {
 //	appendix = 'client'
 //	from sourceSets.main.output
 //	exclude('**/*Something*')
 //}
-
-
 
 uploadBootArchives {
 	repositories {
@@ -118,8 +117,10 @@ dependencies {
     //	}
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-webflux')
-	compile('org.codehaus.groovy:groovy')
+//    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    compile('org.codehaus.groovy:groovy')
 	compile('org.codehaus.groovy:groovy-json')
+	compile 'org.hibernate:hibernate-java8'
     //    compile group: 'com.h2database', name: 'h2', version: '1.3.148'
 	// Use MySQL Connector-J
 	compile 'mysql:mysql-connector-java'

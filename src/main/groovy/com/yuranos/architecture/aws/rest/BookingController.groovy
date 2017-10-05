@@ -1,7 +1,6 @@
 package com.yuranos.architecture.aws.rest
 
 import com.yuranos.architecture.aws.relational.BookingRepository
-import groovy.json.JsonBuilder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -9,16 +8,21 @@ import org.springframework.web.bind.annotation.*
  * Created by yuranos on 9/20/17.
  */
 @RestController
-@Newify([JsonBuilder, Booking])
-class BookingsController implements DateFormatter {
+@Newify(Booking)
+class BookingController implements DateFormatability {
 
     @Autowired
     BookingRepository bookingRepository
 
     @GetMapping("/booking/{id}")
-    String getBooking(@PathVariable(required = true) int id) {
+    Booking getBooking(@PathVariable(required = true) int id) {
         def booking = bookingRepository.findById(id)
-        JsonBuilder(booking.orElse(Booking())).toPrettyString()
+        booking.orElse(Booking())
+    }
+
+    @GetMapping("/booking")
+    Booking getBookingQuery(Booking booking) {
+        booking
     }
 
     @PostMapping("/booking")
@@ -36,7 +40,11 @@ class BookingsController implements DateFormatter {
     @PutMapping("/booking/{id}")
     ResponseEntity<String> putBooking(@PathVariable(required = true) int id, @RequestBody Booking booking) {
         int status = bookingRepository.update(id, booking)
-        ResponseEntity.ok("The booking with id $id has been updated")
+        if(status) {
+            ResponseEntity.ok("The booking with id $id has been updated")
+        } else {
+            ResponseEntity.notFound().build()
+        }
     }
 
 //    @RequestMapping("/")
