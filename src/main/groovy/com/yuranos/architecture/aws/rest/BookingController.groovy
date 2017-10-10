@@ -15,30 +15,25 @@ class BookingController implements DateFormatability {
     BookingRepository bookingRepository
 
     @GetMapping("/booking/{id}")
-    Booking getBooking(@PathVariable(required = true) int id) {
+    def getBooking(@PathVariable(required = true) int id) {
         def booking = bookingRepository.findById(id)
         booking.orElse(Booking())
     }
 
-    @GetMapping("/booking")
-    Booking getBookingQuery(Booking booking) {
-        booking
-    }
-
     @PostMapping("/booking")
-    ResponseEntity<String> postBooking(@RequestBody Booking booking) {
+    def postBooking(@RequestBody Booking booking) {
         def createdBooking = bookingRepository.save(booking)
         ResponseEntity.ok("The booking with id $createdBooking.id has been created")
     }
 
     @DeleteMapping("/booking/{id}")
-    ResponseEntity<String> deleteBooking(@PathVariable(required = true) int id) {
+    def deleteBooking(@PathVariable(required = true) int id) {
         bookingRepository.deleteById(id)
         ResponseEntity.ok("The booking with id ${id} has been deleted")
     }
 
     @PutMapping("/booking/{id}")
-    ResponseEntity<String> putBooking(@PathVariable(required = true) int id, @RequestBody Booking booking) {
+    def putBooking(@PathVariable(required = true) int id, @RequestBody Booking booking) {
         int status = bookingRepository.update(id, booking)
         if(status) {
             ResponseEntity.ok("The booking with id $id has been updated")
@@ -47,28 +42,4 @@ class BookingController implements DateFormatability {
         }
     }
 
-//    @RequestMapping("/")
-//    @ResponseBody
-//    DeferredResult<String> home() {
-//        // Create DeferredResult with timeout 5s
-//        final DeferredResult<String> result = new DeferredResult<>(5000);
-//
-//        // Let's call the backend
-//        ListenableFuture<ResponseEntity<String>> future = restTemplate.getForEntity("http://www.google.com", String.class);
-//        future.addCallback(new ListenableFutureCallback<ResponseEntity<String>>() {
-//            @Override
-//            public void onSuccess(ResponseEntity<String> response) {
-//                // Will be called in HttpClient thread
-//                log("Success");
-//                result.setResult(response.getBody());
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                result.setErrorResult(t.getMessage());
-//            }
-//        });
-//        // Return the thread to servlet container, the response will be processed by another thread.
-//        return result;
-//    }
 }
